@@ -1,0 +1,24 @@
+#Suggested by http://www.railstutorial.org/
+log/*.log
+tmp/*
+tmp/**/*
+doc/api
+doc/app
+db/*.sqlite3
+*.swp
+*~
+.DS_Store
+
+#Added
+log/*.pid
+config/database.yml
+public/stylesheets/compiled/*
+
+# cucumber
+rerun.txt
+webrat-[0-9]*.html
+
+#designer
+portal.esproj/*
+portal_development
+portal_test
