@@ -1,4 +1,4 @@
 %h2 You are currently following:
 %ul.tweets
   -@tweets.each do |tweet|
-    %li= "#{link_to (tweet['screen_name'] , 'http://twitter.com/' + tweet['screen_name'], :target => "_blank")}"
+    %li= "#{link_to (tweet['screen_name'] , 'http://twitter.com/' + tweet['screen_name'], :target => "_blank")} #{tweet['status']['text']}"
