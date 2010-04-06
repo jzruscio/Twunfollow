@@ -7,6 +7,8 @@
     -@tweets.each do |tweet|
       %tr
         %td= link_to(tweet['screen_name'], 'http://twitter.com/'+tweet['screen_name'], :target => "_blank")
-        -#%td= tweet['status']
-    -#%li= "#{link_to (tweet['screen_name'] , 'http://twitter.com/' + tweet['screen_name'], :target => "_blank")} #{tweet['status']['text']}"
+        -if tweet['status']
+          %td= tweet['status']['text']
+        -else
+          %td This user has no tweets
 = button_to "Logout", :action => "destroy", :controller => "sessions"
