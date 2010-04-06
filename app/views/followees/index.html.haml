@@ -1,4 +1,12 @@
-%h2 You are currently following:
+%h2= "Listing followers of #{@user.login}:"
 %ul.tweets
-  -@tweets.each do |tweet|
-    %li= "#{link_to (tweet['screen_name'] , 'http://twitter.com/' + tweet['screen_name'], :target => "_blank")} #{tweet['status']['text']}"
+  %table
+    %tr
+      %th Followee
+      %th Last Tweet
+    -@tweets.each do |tweet|
+      %tr
+        %td= link_to (tweet['screen_name'], 'http://twitter.com/'+tweet['screen_name'], :target => "_blank")
+        %td= tweet['status']['text']
+    -#%li= "#{link_to (tweet['screen_name'] , 'http://twitter.com/' + tweet['screen_name'], :target => "_blank")} #{tweet['status']['text']}"
+= button_to "Logout", :action => "destroy", :controller => "sessions"

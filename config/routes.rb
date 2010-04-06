@@ -14,7 +14,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # Sample resource route with options:
   #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
-
+  map.resources :followees
   # Sample resource route with sub-resources:
   #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
   
@@ -32,7 +32,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
   # map.root :controller => "welcome"
-   map.root :controller => 'followees', :action => 'index'
+  
 
   # See how all your routes lay out with "rake routes"
 
@@ -41,4 +41,9 @@ ActionController::Routing::Routes.draw do |map|
   # consider removing or commenting them out if you're using named routes and resources.
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
+  
+  #Twitter-Auth routes
+  map.root :controller => 'home', :action => 'index'
+  #map.login '/login', :controller => 'sessions', :action => 'new'
+  #map.logout '/logout', :controller => 'sessions', :action => 'destroy'
 end
