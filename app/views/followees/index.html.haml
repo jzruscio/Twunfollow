@@ -6,7 +6,7 @@
       %th Last Tweet
     -@tweets.each do |tweet|
       %tr
-        %td= link_to (tweet['screen_name'], 'http://twitter.com/'+tweet['screen_name'], :target => "_blank")
-        %td= tweet['status']['text']
+        %td= link_to(tweet['screen_name'], 'http://twitter.com/'+tweet['screen_name'], :target => "_blank")
+        -#%td= tweet['status']
     -#%li= "#{link_to (tweet['screen_name'] , 'http://twitter.com/' + tweet['screen_name'], :target => "_blank")} #{tweet['status']['text']}"
 = button_to "Logout", :action => "destroy", :controller => "sessions"
