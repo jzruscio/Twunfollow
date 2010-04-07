@@ -1,14 +1,23 @@
 %h2= "Listing followers of #{@user.login}:"
-%ul.tweets
+-if @resp
+  ="Response #{@resp}"
+-form_for :enemy, :url => {:action => "unfollow"} do |unfollow|
   %table
     %tr
+      %th Unfollow?
       %th Followee
+      %th ID
       %th Last Tweet
     -@tweets.each do |tweet|
       %tr
-        %td= link_to(tweet['screen_name'], 'http://twitter.com/'+tweet['screen_name'], :target => "_blank")
+        %td
+          %input{:type => "checkbox", :name => "#{tweet['id']}"}
+        %td= link_to(tweet['screen_name'], 'http://twitter.com/'+tweet['screen_name'], :target => "_blank")  
+        %td=tweet['id']
         -if tweet['status']
           %td= tweet['status']['text']
         -else
           %td This user has no tweets
+  %input{:type => "submit"}
+%hr
 = button_to "Logout", :action => "destroy", :controller => "sessions"
