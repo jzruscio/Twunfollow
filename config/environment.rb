@@ -41,5 +41,8 @@ Rails::Initializer.run do |config|
 
   # Use TwitterAuth
   config.gem 'twitter-auth', :lib => 'twitter_auth' 
+  
+  # Use Paginate
+  config.gem 'will_paginate', :lib => 'will_paginate', :version => '2.3.12'
 end
 

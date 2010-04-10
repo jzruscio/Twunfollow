@@ -1,4 +1,9 @@
 %h2= "Listing followers of #{@user.login}:"
+-form_for :friend, :url => {:controller => "search", :action => "index"} do |search|
+  Search Twitter
+  %input{:type => "text", :name => "search"}
+  %input{:type => "submit"}
+%hr
 -if @resp
   ="Response #{@resp}"
 -form_for :enemy, :url => {:action => "unfollow"} do |unfollow|
@@ -8,7 +13,7 @@
       %th Followee
       %th ID
       %th Last Tweet
-    -@tweets.each do |tweet|
+    -@paged.each do |tweet|
       %tr
         %td
           %input{:type => "checkbox", :name => "#{tweet['id']}"}
@@ -18,6 +23,7 @@
           %td= tweet['status']['text']
         -else
           %td This user has no tweets
+  = will_paginate @paged
   %input{:type => "submit"}
 %hr
 = button_to "Logout", :action => "destroy", :controller => "sessions"
