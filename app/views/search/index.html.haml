@@ -1,17 +1,32 @@
 -form_for :friend, :url => {:controller => "followees", :action => "follow"} do |follow|
-  %br"Here are the results for your search of Twitter user names"
   %table
     %tr
       %th Follow?
       %th User
-      %th Last Tweet
-    -@results.each do |result|
+      %th Tweet
+    -if @name_results
       %tr
-        %td
-          %input{:type =>"checkbox", :name => "#{result['id']}"}
-        %td= link_to(result['screen_name'], 'http://twitter.com/'+result['screen_name'], :target => "_blank")
-        -if result['status']
-          %td= result['status']['text']
-        -else
-          %td This user has no tweets
+        %td{:colspan => "3"}"Here are the results for your search of Twitter user names"
+      -@name_results.each do |result|
+        %tr
+          %td
+            %input{:type =>"checkbox", :name => "#{result['id']}"}
+          %td= link_to(result['screen_name'], 'http://twitter.com/'+result['screen_name'], :target => "_blank")
+          -if result['status']
+            %td= result['status']['text']
+          -else
+            %td This user has no tweets
+    -if @tweet_results 
+      %tr 
+        %td{:colspan => "3"} "Here are the results for the search of Tweets"
+      -@tweet_results.each do |result|
+        %tr
+          %td
+            %input{:type =>"checkbox", :name => "#{result['id']}"}
+          %td= link_to(result['from_user'], 'http://twitter.com/'+result['from_user'], :target => "_blank")
+          -if result['text']
+            %td= result['text']
+          -else
+            %td This user has no tweets
   %input{:type => "submit"}
+= link_to "Back to Followees", :controller => "followees", :action => "index"

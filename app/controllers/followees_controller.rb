@@ -1,6 +1,5 @@
 class FolloweesController < ApplicationController
-  #before_filter :login_required
-
+  before_filter :login_required
   def index
     if logged_in?
       find_followees
@@ -23,11 +22,7 @@ class FolloweesController < ApplicationController
     params.each do |key, value| 
       if value == "on"
         temp = "/friendships/destroy.xml?user_id=#{key}"
-        #begin
         @resp= current_user.twitter.post(temp)
-        #rescue TwitterAuth::Dispatcher::Error => e
-        #  logger.info "**#{e}**\n"
-        #end
       end
     end
     find_followees
@@ -37,7 +32,15 @@ class FolloweesController < ApplicationController
   def find_followees
     @tweets = current_user.twitter.get('/statuses/friends')
     @user = current_user
-    @paged = @tweets.paginate({:page => 2, :per_page => 3})
+    @paged = @tweets.paginate(:page => params[:page], :per_page => 5)
+  end
+ 
+  def logout
+    logout = current_user.twitter.post('/account/end_session.json')
+    current_user.forget_me
+    logger.debug "Current User: #{current_user[:name]} Logout #{logout}\n"
+    redirect_to :action => "destroy", :controller => "sessions"
+    #redirect_to :action => "index", :controller => "home"
   end
  
   private

@@ -1,29 +1,37 @@
-%h2= "Listing followers of #{@user.login}:"
--form_for :friend, :url => {:controller => "search", :action => "index"} do |search|
-  Search Twitter
-  %input{:type => "text", :name => "search"}
-  %input{:type => "submit"}
-%hr
--if @resp
-  ="Response #{@resp}"
--form_for :enemy, :url => {:action => "unfollow"} do |unfollow|
-  %table
-    %tr
-      %th Unfollow?
-      %th Followee
-      %th ID
-      %th Last Tweet
-    -@paged.each do |tweet|
-      %tr
-        %td
-          %input{:type => "checkbox", :name => "#{tweet['id']}"}
-        %td= link_to(tweet['screen_name'], 'http://twitter.com/'+tweet['screen_name'], :target => "_blank")  
-        %td=tweet['id']
-        -if tweet['status']
-          %td= tweet['status']['text']
-        -else
-          %td This user has no tweets
-  = will_paginate @paged
-  %input{:type => "submit"}
-%hr
-= button_to "Logout", :action => "destroy", :controller => "sessions"
+%html{:xmlns => "http://www.w3.org/1999/xhtml", "xml:lang" => "en", :lang =>"en"}
+  %head
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    %title= controller.action_name
+    = stylesheet_link_tag 'twitter'
+  %body                            
+    -form_for :friend, :url => {:controller => "search", :action => "index"} do |search|
+      %h3 Search Twitter:
+      -if flash[:notice]
+        %div#notice= flash[:notice]
+      %input{:type => "checkbox", :name => "names", :value => "on", :checked => "value"}User Names
+      and/or
+      %input{:type => "checkbox", :name => "tweets"}Tweets<br>
+      %input{:type => "text", :name => "search"}
+      %br
+      %input{:type => "submit"}
+    %hr
+    %h3= "Listing followers of #{@user.login}:"
+    -form_for :enemy, :url => {:action => "unfollow"} do |unfollow|
+      %table
+        %tr
+          %th Unfollow?
+          %th Followee
+          %th Last Tweet
+        -@paged.each do |tweet|
+          %tr
+            %td
+              %input{:type => "checkbox", :name => "#{tweet['id']}"}
+            %td= link_to(tweet['screen_name'], 'http://twitter.com/'+tweet['screen_name'], :target => "_blank")  
+            -if tweet['status']
+              %td= tweet['status']['text']
+            -else
+              %td This user has no tweets
+      = will_paginate @paged
+      %input{:type => "submit"}
+    %hr
+    = button_to "Logout", :action => "logout", :controller => "followees"
