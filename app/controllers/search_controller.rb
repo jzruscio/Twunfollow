@@ -21,7 +21,7 @@ class SearchController < ApplicationController
     @tweet_results.each do |result|
       temp= current_user.twitter.get("/friendships/show.json?source_screen_name=#{current_user.login}&target_screen_name=#{result['from_user']}")
         #logger.debug "HI temp=#{temp['relationship']['target']['following']}\n"
-        if temp['relationship']['target']['following']
+        if temp['relationship']['source']['following']
           result['following'] = "true"
         end
 #logger.debug "#{result['following']}\n"
