@@ -2,8 +2,6 @@ require 'open-uri'
 class SearchController < ApplicationController
 
   def index
-no_period = params[:search].sub(".", "&#46;")
-logger.debug "#{params[:serach]} #{no_period}\n"
     if params[:search].length == 0 
       flash[:notice] = "Please enter a search term"
       redirect_to :controller => "followees", :action => "index" and return
@@ -20,7 +18,8 @@ logger.debug "#{params[:serach]} #{no_period}\n"
   
   def search_tweets(opts)
     term = "/users/search.json?q=#{opts}"
-    @tweet_results = JSON.parse(open("http://search.twitter.com/search.json?q=#{CGI.escape(opts)}&show_user=true&result_type=mixed").read)['results']
+    #@tweet_results = JSON.parse(open("http://search.twitter.com/search.json?q=#{CGI.escape(opts)}&show_user=true&result_type=mixed").read)['results']
+    @tweet_results = JSON.parse(open("http://search.twitter.com/search.json?q=#{opts}&show_user=true&result_type=mixed").read)['results']
     @tweet_results.each do |result|
       temp= current_user.twitter.get("/friendships/show.json?source_screen_name=#{current_user.login}&target_screen_name=#{result['from_user']}")
         #logger.debug "HI temp=#{temp['relationship']['target']['following']}\n"

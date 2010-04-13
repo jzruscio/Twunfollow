@@ -1,4 +1,4 @@
-This app uses twitter-auth to authentic users and display twitter users they are
+This app displays a users the twitter users that they are
 following (200 at a time).  The user may then do mass unfollows.  Additionally,
 the user may search twitter user names or tweets, with the ability to follow
 twitter users whose user name or tweet matches the search.
