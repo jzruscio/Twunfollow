@@ -17,11 +17,10 @@ class SearchController < ApplicationController
   
   def search_tweets(opts)
     term = "/users/search.json?q=#{opts}"
-    #@tweet_results = JSON.parse(open("http://search.twitter.com/search.json?q=#{CGI.escape(opts)}&show_user=true&result_type=mixed").read)['results']
-    @tweet_results = JSON.parse(open("http://search.twitter.com/search.json?q=#{opts}&show_user=true&result_type=mixed").read)['results']
+    @tweet_results = JSON.parse(open("http://search.twitter.com/search.json?q=#{CGI.escape(opts)}&show_user=true&result_type=mixed").read)['results']
     @tweet_results.each do |result|
       temp= current_user.twitter.get("/friendships/show.json?source_screen_name=#{current_user.login}&target_screen_name=#{result['from_user']}")
-        #logger.debug "HI temp=#{temp['relationship']['target']['following']}\n"
+        #logger.debug "temp=#{temp['relationship']['target']['following']}\n"
         if temp['relationship']['source']['following']
           result['following'] = "true"
         end
