@@ -5,7 +5,6 @@ class SearchController < ApplicationController
     if params[:search].length == 0 
       flash[:notice] = "Please enter a search term"
       redirect_to :controller => "followees", :action => "index" and return
-      #redirect_to :controller => "followees", :action => "index" and return if params[:search].length ==0
     end
     if params[:tweets] == "on"
       search_tweets(params[:search])

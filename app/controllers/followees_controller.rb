@@ -9,20 +9,26 @@ class FolloweesController < ApplicationController
   end
  
   def follow
+    flash[:notice] = ""
     params.each do |key,value|
       if value == "on"
         temp = "/friendships/create.xml?user_id=#{key}"
         current_user.twitter.post(temp)
+        looked_up_user = lookup_user(key)
+        flash[:notice] << "You are now following #{looked_up_user}<br>"
       end
     end
     redirect_to :action => "index"
   end
  
   def unfollow
+    flash[:notice] = ""
     params.each do |key, value| 
       if value == "on"
         temp = "/friendships/destroy.xml?user_id=#{key}"
         @resp= current_user.twitter.post(temp)
+        looked_up_user = lookup_user(key)
+        flash[:notice] << "You are now unfollowing #{looked_up_user}<br>"
       end
     end
     find_followees
@@ -49,4 +55,7 @@ class FolloweesController < ApplicationController
     redirect_to :action => "index"
   end
 
+  def lookup_user(opts)
+    current_user.twitter.get("/users/lookup.json?user_id=#{opts}")['screen_name']
+  end
 end
