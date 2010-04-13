@@ -2,12 +2,15 @@ require 'open-uri'
 class SearchController < ApplicationController
 
   def index
+no_period = params[:search].sub(".", "&#46;")
+logger.debug "#{params[:serach]} #{no_period}\n"
     if params[:search].length == 0 
       flash[:notice] = "Please enter a search term"
       redirect_to :controller => "followees", :action => "index" and return
     end
     if params[:tweets] == "on"
-      search_tweets(params[:search])
+      search_tweets(no_period)
+      #search_tweets(params[:search])
     end
     if params[:names] == "on"
       search_names(params[:search])
