@@ -54,7 +54,6 @@ class FolloweesController < ApplicationController
     current_user.forget_me
     logger.debug "Current User: #{current_user[:name]} Logout #{logout}\n"
     redirect_to :action => "destroy", :controller => "sessions"
-    #redirect_to :action => "index", :controller => "home"
   end
  
   private

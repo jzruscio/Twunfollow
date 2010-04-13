@@ -24,7 +24,6 @@ class SearchController < ApplicationController
         if temp['relationship']['source']['following']
           result['following'] = "true"
         end
-#logger.debug "#{result['following']}\n"
     end
   end
   
