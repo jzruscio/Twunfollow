@@ -36,9 +36,17 @@ class FolloweesController < ApplicationController
   end
  
   def find_followees
-    @tweets = current_user.twitter.get('/statuses/friends')
+    @tweets = current_user.twitter.get('/statuses/friends?cursor=-1')['users']
+    cursor = current_user.twitter.get('/statuses/friends?cursor=-1')['next_cursor']
+    #logger.debug "first cursor = #{cursor} type =  #{@tweets.type} length = #{@tweets.length}\n"
+    while cursor > 0
+      @tweets.concat( current_user.twitter.get("/statuses/friends?cursor=#{cursor}")['users'])
+      cursor = current_user.twitter.get("/statuses/friends?cursor=#{cursor}")['next_cursor']
+      #logger.debug "inside cursor = #{cursor} type =  #{@tweets.type} length = #{@tweets.length}\n"
+    end
+    #logger.debug "last cursor = #{cursor} type =  #{@tweets.type} length = #{@tweets.length}\n"
     @user = current_user
-    @paged = @tweets.paginate(:page => params[:page], :per_page => 5)
+    @paged = @tweets.paginate(:page => params[:page], :per_page => 120)
   end
  
   def logout

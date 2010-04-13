@@ -12,12 +12,13 @@
           %th Tweet
         -if @name_results
           %tr.tr
-            %td.td{:colspan => "3"}"Here are the results for your search of Twitter user names"
+            %th.td{:colspan => "3"} Here are the results for your search of Twitter user names
           -@name_results.each do |result|
             %tr{:class => cycle('list-line-odd', 'list-line-even')}
               -if result['following']
-                %td.td
-                  Already Following
+                %td.td Already Following
+              -elsif result['screen_name'] == @user.login
+                %td.td That's you!
               -else
                 %td.td
                   %input{:type =>"checkbox", :name => "#{result['id']}"}
@@ -28,11 +29,16 @@
                 %td.td This user has no tweets
         -if @tweet_results 
           %tr.tr 
-            %td.td{:colspan => "3"} "Here are the results for the search of Tweets"
+            %th.td{:colspan => "3"} Here are the results for the search of Tweets
           -@tweet_results.each do |result|
-            %tr.tr
-              %td.td
-                %input{:type =>"checkbox", :name => "#{result['id']}"}
+            %tr{:class => cycle('list-line-odd', 'list-line-even')}
+              -if result['from_user'] == @user.login
+                %td.td That's you!
+              -elsif result['following']
+                %td.td Already Following
+              -else
+                %td.td
+                  %input{:type =>"checkbox", :name => "#{result['id']}"}
               %td.td= link_to(result['from_user'], 'http://twitter.com/'+result['from_user'], :target => "_blank")
               -if result['text']
                 %td.td= result['text']
