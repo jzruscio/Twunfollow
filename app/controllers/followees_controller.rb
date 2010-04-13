@@ -46,7 +46,7 @@ class FolloweesController < ApplicationController
     end
     #logger.debug "last cursor = #{cursor} type =  #{@tweets.type} length = #{@tweets.length}\n"
     @user = current_user
-    @paged = @tweets.paginate(:page => params[:page], :per_page => 120)
+    @paged = @tweets.paginate(:page => params[:page], :per_page => 200)
   end
  
   def logout
