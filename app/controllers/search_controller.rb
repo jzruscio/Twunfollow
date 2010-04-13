@@ -7,8 +7,7 @@ class SearchController < ApplicationController
       redirect_to :controller => "followees", :action => "index" and return
     end
     if params[:tweets] == "on"
-      search_tweets(no_period)
-      #search_tweets(params[:search])
+      search_tweets(params[:search])
     end
     if params[:names] == "on"
       search_names(params[:search])
