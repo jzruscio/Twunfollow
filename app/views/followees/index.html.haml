@@ -3,34 +3,34 @@
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     %title= controller.action_name
     = stylesheet_link_tag 'twitter'
-  %body                            
-    -form_for :friend, :url => {:controller => "search", :action => "index"} do |search|
-      %h3 Search Twitter:
-      -if flash[:notice]
-        %div#notice= flash[:notice]
-      %input{:type => "checkbox", :name => "names", :value => "on", :checked => "value"}User Names
-      and/or
-      %input{:type => "checkbox", :name => "tweets"}Tweets<br>
-      %input{:type => "text", :name => "search"}
-      %br
-      %input{:type => "submit"}
-    %hr
-    %h3= "Listing followers of #{@user.login}:"
+  %body                        
+    -if flash[:notice]
+      %div.notice= flash[:notice]
+    %div.form
+      -form_for :friend, :url => {:controller => "search", :action => "index"} do |search|
+        Search Twitter:
+        %input{:type => "checkbox", :name => "names", :value => "on", :checked => "value"}User Names
+        and/or
+        %input{:type => "checkbox", :name => "tweets"}Tweets
+        %input{:type => "text", :name => "search"}
+        %input{:type => "submit", :value => "Search"}
+      %hr
+    %h3= "You (#{@user.login}) are currently following:"
     -form_for :enemy, :url => {:action => "unfollow"} do |unfollow|
-      %table
-        %tr
+      %table.table
+        %tr.table
           %th Unfollow?
           %th Followee
           %th Last Tweet
         -@paged.each do |tweet|
-          %tr
-            %td
+          %tr{:class => cycle('list-line-odd', 'list-line-even')}
+            %td.td
               %input{:type => "checkbox", :name => "#{tweet['id']}"}
-            %td= link_to(tweet['screen_name'], 'http://twitter.com/'+tweet['screen_name'], :target => "_blank")  
+            %td.td= link_to(tweet['screen_name'], 'http://twitter.com/'+tweet['screen_name'], :target => "_blank")  
             -if tweet['status']
-              %td= tweet['status']['text']
+              %td.td= tweet['status']['text']
             -else
-              %td This user has no tweets
+              %td.td This user has no tweets
       = will_paginate @paged
       %input{:type => "submit"}
     %hr

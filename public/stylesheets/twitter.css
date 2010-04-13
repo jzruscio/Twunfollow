@@ -1,7 +1,31 @@
-#notice {
+.notice {
   border: 2px solid red;
   padding: 1em;
   margin-bottom: 2em;
   background-color: #f0f0f0;
   font: bold smaller sans-serif;
   color: red; }
+
+.table {
+  border: 2px solid;
+  border-collapse: collapse; }
+
+.table th {
+  border: 1px solid;
+  background: #808080; }
+
+.table td {
+  border: 1px solid; }
+
+.table tdcenter {
+  border: 1px solid;
+  text-align: center; }
+
+.table .list-line-even {
+  background: #c0c0c0; }
+
+.table .list-line-odd {
+  background: #9ae4e8; }
+
+form {
+  display: inline; }

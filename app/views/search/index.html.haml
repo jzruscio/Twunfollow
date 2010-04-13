@@ -1,36 +1,42 @@
--form_for :friend, :url => {:controller => "followees", :action => "follow"} do |follow|
-  %table
-    %tr
-      %th Follow?
-      %th User
-      %th Tweet
-    -if @name_results
-      %tr
-        %td{:colspan => "3"}"Here are the results for your search of Twitter user names"
-      -@name_results.each do |result|
-        %tr
-          -if result['following']
-            %td
-              Already Following
-          -else
-            %td
-              %input{:type =>"checkbox", :name => "#{result['id']}"}
-          %td= link_to(result['screen_name'], 'http://twitter.com/'+result['screen_name'], :target => "_blank")
-          -if result['status']
-            %td= result['status']['text']
-          -else
-            %td This user has no tweets
-    -if @tweet_results 
-      %tr 
-        %td{:colspan => "3"} "Here are the results for the search of Tweets"
-      -@tweet_results.each do |result|
-        %tr
-          %td
-            %input{:type =>"checkbox", :name => "#{result['id']}"}
-          %td= link_to(result['from_user'], 'http://twitter.com/'+result['from_user'], :target => "_blank")
-          -if result['text']
-            %td= result['text']
-          -else
-            %td This user has no tweets
-  %input{:type => "submit"}
-= link_to "Back to Followees", :controller => "followees", :action => "index"
+%html{:xmlns => "http://www.w3.org/1999/xhtml", "xml:lang" => "en", :lang =>"en"}
+  %head
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    %title= controller.action_name
+    = stylesheet_link_tag 'twitter'
+  %body
+    -form_for :friend, :url => {:controller => "followees", :action => "follow"} do |follow|
+      %table.table
+        %tr.tr
+          %th Follow?
+          %th User
+          %th Tweet
+        -if @name_results
+          %tr.tr
+            %td.td{:colspan => "3"}"Here are the results for your search of Twitter user names"
+          -@name_results.each do |result|
+            %tr{:class => cycle('list-line-odd', 'list-line-even')}
+              -if result['following']
+                %td.td
+                  Already Following
+              -else
+                %td.td
+                  %input{:type =>"checkbox", :name => "#{result['id']}"}
+              %td.td= link_to(result['screen_name'], 'http://twitter.com/'+result['screen_name'], :target => "_blank")
+              -if result['status']
+                %td.td= result['status']['text']
+              -else
+                %td.td This user has no tweets
+        -if @tweet_results 
+          %tr.tr 
+            %td.td{:colspan => "3"} "Here are the results for the search of Tweets"
+          -@tweet_results.each do |result|
+            %tr.tr
+              %td.td
+                %input{:type =>"checkbox", :name => "#{result['id']}"}
+              %td.td= link_to(result['from_user'], 'http://twitter.com/'+result['from_user'], :target => "_blank")
+              -if result['text']
+                %td.td= result['text']
+              -else
+                %td.td This user has no tweets
+      %input{:type => "submit"}
+    = link_to "Back to Followees", :controller => "followees", :action => "index"
