@@ -9,8 +9,12 @@
         %td{:colspan => "3"}"Here are the results for your search of Twitter user names"
       -@name_results.each do |result|
         %tr
-          %td
-            %input{:type =>"checkbox", :name => "#{result['id']}"}
+          -if result['following']
+            %td
+              Already Following
+          -else
+            %td
+              %input{:type =>"checkbox", :name => "#{result['id']}"}
           %td= link_to(result['screen_name'], 'http://twitter.com/'+result['screen_name'], :target => "_blank")
           -if result['status']
             %td= result['status']['text']
